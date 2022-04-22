@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton'
 import AddIcon from '@mui/icons-material/Add'
 
 interface InputWithAddInterface {
-  cityAddHandler: () => void
+  cityAddHandler: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   handleTextChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   city: string
 }
@@ -25,6 +25,8 @@ const InputWithAdd: React.FC<InputWithAddInterface> = ({
         sx={{ ml: 1, flex: 1 }}
         placeholder='Search Google Maps'
         inputProps={{ 'aria-label': 'search google maps' }}
+        onChange={handleTextChange}
+        value={city}
       />
       <IconButton
         onClick={cityAddHandler}

@@ -18,7 +18,10 @@ const Test: React.FC = () => {
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setCity(e.target.value)
   }
-  const cityAddHandler = (): void => {
+  const cityAddHandler = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    event.preventDefault()
     setCities([...cities, city])
     setCity('')
   }
@@ -31,7 +34,9 @@ const Test: React.FC = () => {
         cityAddHandler={cityAddHandler}
       />
       <WeatherCard city='Gopalganj' />
-      <WeatherCard city='Error' />
+      {cities.map((city) => (
+        <WeatherCard key={city} city={city} />
+      ))}
     </>
   )
 }
