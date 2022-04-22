@@ -12,7 +12,7 @@ import WeatherCard from './weatherCard'
 import './popup.css'
 
 const Test: React.FC = () => {
-  const [cities, setCities] = useState<string[]>([])
+  const [cities, setCities] = useState<string[]>(['Gopalganj'])
   const [city, setCity] = useState<string>('')
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -26,6 +26,10 @@ const Test: React.FC = () => {
     setCity('')
   }
 
+  const deleteCity = (city: string): void => {
+    setCities(cities.filter((c) => c !== city))
+  }
+
   return (
     <>
       <InputWithAdd
@@ -33,9 +37,13 @@ const Test: React.FC = () => {
         city={city}
         cityAddHandler={cityAddHandler}
       />
-      <WeatherCard city='Gopalganj' />
       {cities.map((city) => (
-        <WeatherCard key={city} city={city} />
+        <WeatherCard
+          key={city}
+          city={city}
+          deleteCity={deleteCity}
+          numberOfCities={cities.length}
+        />
       ))}
     </>
   )

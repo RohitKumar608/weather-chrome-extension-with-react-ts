@@ -7,8 +7,13 @@ import Stack from '@mui/material/Stack'
 import { fetchOpenWeatherData, OpenWeatherData } from '../../utils/app'
 import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
+import ClearIcon from '@mui/icons-material/Clear'
 
-const WeatherCard: React.FC<{ city: string }> = ({ city }) => {
+const WeatherCard: React.FC<{
+  city: string
+  deleteCity: (name: string) => void
+  numberOfCities: number
+}> = ({ city, deleteCity, numberOfCities }) => {
   const [weatherData, setWeatherData] = useState<OpenWeatherData | null>(null)
   const [apiState, setApiState] = useState<{
     isLoading: boolean
@@ -35,7 +40,7 @@ const WeatherCard: React.FC<{ city: string }> = ({ city }) => {
     )
   }
   return apiState.isSuccess ? (
-    <Box sx={{ minWidth: 275, mx: '4px', my: '16px' }}>
+    <Box sx={{ minWidth: 275, mx: '4px', my: '16px', position: 'relative' }}>
       <Card>
         <CardContent>
           <Typography variant='h5'>{weatherData.name}</Typography>
@@ -46,6 +51,17 @@ const WeatherCard: React.FC<{ city: string }> = ({ city }) => {
             Feels like: {weatherData.main.feels_like}
           </Typography>
         </CardContent>
+        <div
+          onClick={() => deleteCity(city)}
+          style={{
+            position: 'absolute',
+            right: '5px',
+            top: '5px',
+            cursor: 'pointer',
+          }}
+        >
+          {numberOfCities !== 1 && <ClearIcon color='error' />}
+        </div>
       </Card>
     </Box>
   ) : (
