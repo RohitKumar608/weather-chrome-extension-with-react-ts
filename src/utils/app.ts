@@ -16,11 +16,14 @@ export interface OpenWeatherData {
   wind: { speed: number; deg: number }
 }
 
+export type OpenWeatherTempScale = 'imperial' | 'metric'
+
 export async function fetchOpenWeatherData(
-  city: string
+  city: string,
+  scale: OpenWeatherTempScale = 'metric'
 ): Promise<OpenWeatherData> {
   const res = await fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OPEN_WEATHER_API_KEY}&units=metric`
+    `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OPEN_WEATHER_API_KEY}&units=${scale}`
   )
   if (!res.ok) {
     throw new Error(`Could not fetch weather for ${city}`)

@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 import InputWithAdd from '../common/inputWithAdd'
-import { getStoredCities, setStoredCities } from '../utils/storage'
+import {
+  getStoredCities,
+  setStoredCities,
+  setOpenWeatherTempScale,
+  getOpenWeatherTempScale,
+  WeatherTemplateScale,
+} from '../utils/storage'
 
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -13,12 +19,16 @@ import WeatherCard from './weatherCard'
 import './popup.css'
 
 const Test: React.FC = () => {
-  const [cities, setCities] = useState<string[]>(['Gopalganj'])
+  const [cities, setCities] = useState<string[]>([])
   const [city, setCity] = useState<string>('')
+  const [tempScale, setTempScale] = useState<WeatherTemplateScale | null>(null)
 
   useEffect(() => {
     getStoredCities().then((res) => {
       setCities([...cities, ...res])
+    })
+    getOpenWeatherTempScale().then((res) => {
+      setTempScale(res)
     })
   }, [])
 
@@ -43,19 +53,39 @@ const Test: React.FC = () => {
     })
   }
 
+  const handleTempScaleChange = (
+    evt: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ): void => {
+    setOpenWeatherTempScale({
+      tempScale: newAlignment,
+    } as WeatherTemplateScale).then(() => {
+      setTempScale({ tempScale: newAlignment } as WeatherTemplateScale)
+    })
+  }
+
   return (
     <>
       <InputWithAdd
         handleTextChange={handleTextChange}
         city={city}
         cityAddHandler={cityAddHandler}
+        tempScale={tempScale}
+        handleTempScaleChange={handleTempScaleChange}
       />
+      {tempScale?.homeCity !== '' && (
+        <WeatherCard
+          key={tempScale?.homeCity}
+          city={tempScale?.homeCity}
+          tempScale={tempScale}
+        />
+      )}
       {cities.map((city) => (
         <WeatherCard
           key={city}
           city={city}
           deleteCity={deleteCity}
-          numberOfCities={cities.length}
+          tempScale={tempScale}
         />
       ))}
     </>
