@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 import InputWithAdd from '../common/inputWithAdd'
+import { getStoredCities, setStoredCities } from '../utils/storage'
 
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -15,6 +16,12 @@ const Test: React.FC = () => {
   const [cities, setCities] = useState<string[]>(['Gopalganj'])
   const [city, setCity] = useState<string>('')
 
+  useEffect(() => {
+    getStoredCities().then((res) => {
+      setCities([...cities, ...res])
+    })
+  }, [])
+
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setCity(e.target.value)
   }
@@ -22,12 +29,18 @@ const Test: React.FC = () => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     event.preventDefault()
-    setCities([...cities, city])
-    setCity('')
+    const updatedCities = [...cities, city]
+    setStoredCities(updatedCities).then((res) => {
+      setCities(updatedCities)
+      setCity('')
+    })
   }
 
   const deleteCity = (city: string): void => {
-    setCities(cities.filter((c) => c !== city))
+    const updatedCities = cities.filter((c) => c !== city)
+    setStoredCities(updatedCities).then((res) => {
+      setCities(updatedCities)
+    })
   }
 
   return (

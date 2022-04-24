@@ -26,7 +26,6 @@ const WeatherCard: React.FC<{
         setApiState({ isLoading: false, isSuccess: true })
       })
       .catch((err) => {
-        console.log(err)
         setApiState({ isLoading: false, isSuccess: false })
       })
   }, [city])
@@ -65,9 +64,26 @@ const WeatherCard: React.FC<{
       </Card>
     </Box>
   ) : (
-    <Stack sx={{ width: '100%' }} spacing={2}>
-      <Alert severity='error'>Something went wrong</Alert>
-    </Stack>
+    <Box sx={{ minWidth: 275, mx: '4px', my: '16px', position: 'relative' }}>
+      <Card>
+        <CardContent>
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert severity='error'>Something went wrong</Alert>
+          </Stack>
+        </CardContent>
+        <div
+          onClick={() => deleteCity(city)}
+          style={{
+            position: 'absolute',
+            right: '5px',
+            top: '5px',
+            cursor: 'pointer',
+          }}
+        >
+          {numberOfCities !== 1 && <ClearIcon color='error' />}
+        </div>
+      </Card>
+    </Box>
   )
 }
 
