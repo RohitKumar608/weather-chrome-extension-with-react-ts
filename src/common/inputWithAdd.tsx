@@ -1,11 +1,15 @@
 import React from 'react'
-import Paper from '@mui/material/Paper'
-import InputBase from '@mui/material/InputBase'
-import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
+import {
+  Paper,
+  InputBase,
+  Divider,
+  IconButton,
+  ToggleButton,
+  ToggleButtonGroup,
+} from '@mui/material'
+
 import AddIcon from '@mui/icons-material/Add'
-import ToggleButton from '@mui/material/ToggleButton'
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+
 import { WeatherTemplateScale } from '../utils/storage'
 
 interface InputWithAddInterface {
@@ -39,7 +43,7 @@ const InputWithAdd: React.FC<InputWithAddInterface> = ({
     >
       <InputBase
         sx={{ ml: 1, flex: 1 }}
-        placeholder='Search Google Maps'
+        placeholder='Add city name'
         inputProps={{ 'aria-label': 'search google maps' }}
         onChange={handleTextChange}
         value={city}

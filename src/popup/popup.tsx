@@ -59,10 +59,16 @@ const Test: React.FC = () => {
   ): void => {
     setOpenWeatherTempScale({
       tempScale: newAlignment,
+      homeCity: tempScale?.homeCity,
     } as WeatherTemplateScale).then(() => {
-      setTempScale({ tempScale: newAlignment } as WeatherTemplateScale)
+      setTempScale({
+        tempScale: newAlignment,
+        homeCity: tempScale?.homeCity,
+      } as WeatherTemplateScale)
     })
   }
+
+  console.log(cities, 'tempScale?.homeCity', tempScale?.homeCity)
 
   return (
     <>
@@ -73,7 +79,7 @@ const Test: React.FC = () => {
         tempScale={tempScale}
         handleTempScaleChange={handleTempScaleChange}
       />
-      {tempScale?.homeCity !== '' && (
+      {tempScale?.homeCity !== '' && tempScale?.homeCity !== undefined && (
         <WeatherCard
           key={tempScale?.homeCity}
           city={tempScale?.homeCity}

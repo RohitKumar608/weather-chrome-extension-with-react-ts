@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Typography from '@mui/material/Typography'
-import Alert from '@mui/material/Alert'
-import Stack from '@mui/material/Stack'
-import Box from '@mui/material/Box'
-import Skeleton from '@mui/material/Skeleton'
+import {
+  Card,
+  CardContent,
+  Typography,
+  Alert,
+  Stack,
+  Box,
+  Skeleton,
+} from '@mui/material'
+
 import ClearIcon from '@mui/icons-material/Clear'
 import { fetchOpenWeatherData, OpenWeatherData } from '../../utils/app'
 import { WeatherTemplateScale } from '../../utils/storage'
