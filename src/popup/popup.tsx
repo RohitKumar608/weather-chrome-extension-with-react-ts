@@ -15,7 +15,7 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
-import WeatherCard from './weatherCard'
+import WeatherCard from '../common/weatherCard/WeatherCard'
 import './popup.css'
 
 const Test: React.FC = () => {
