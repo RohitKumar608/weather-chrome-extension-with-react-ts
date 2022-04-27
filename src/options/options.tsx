@@ -8,6 +8,7 @@ import {
   TextField,
   Box,
   Button,
+  Switch,
 } from '@mui/material'
 
 import {
@@ -26,12 +27,20 @@ import './options.css'
 const Options = () => {
   const [tempScale, setTempScale] = useState<WeatherTemplateScale | null>(null)
   const [city, setCity] = useState<string>('')
+  const [checked, setChecked] = useState<boolean>(false)
+  const [saving, setSaving] = useState<boolean>(false)
 
   useEffect(() => {
     getOpenWeatherTempScale().then((scale) => {
       setTempScale(scale)
+      setChecked(scale?.hasOverlay)
+      setCity(scale?.homeCity)
     })
   }, [])
+
+  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked)
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCity(event.target.value)
@@ -40,11 +49,13 @@ const Options = () => {
   const handleSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    setSaving(true)
     setOpenWeatherTempScale({
-      tempScale: tempScale?.tempScale,
+      ...tempScale,
       homeCity: city,
+      hasOverlay: checked,
     } as WeatherTemplateScale).then((res) => {
-      // setCity('')
+      setSaving(false)
     })
   }
 
@@ -62,9 +73,16 @@ const Options = () => {
                 id='standard-basic'
                 label='City name'
                 variant='standard'
-                value={tempScale?.homeCity || city}
+                value={city}
                 fullWidth
                 onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Switch
+                checked={checked}
+                onChange={handleSwitchChange}
+                inputProps={{ 'aria-label': 'controlled' }}
               />
             </Grid>
             <Grid item>
@@ -72,6 +90,7 @@ const Options = () => {
                 onClick={handleSubmit}
                 variant='contained'
                 color='primary'
+                disabled={saving}
               >
                 Save
               </Button>

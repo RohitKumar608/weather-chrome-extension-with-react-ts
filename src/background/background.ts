@@ -1,6 +1,10 @@
 import { setOpenWeatherTempScale } from '../utils/storage'
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  setOpenWeatherTempScale({ tempScale: 'metric', homeCity: '' })
+  setOpenWeatherTempScale({
+    tempScale: 'metric',
+    homeCity: '',
+    hasOverlay: false,
+  })
 
   chrome.contextMenus.create({
     contexts: ['selection'],

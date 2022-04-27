@@ -14,10 +14,15 @@ const ContentScript: React.FC<{}> = () => {
       setTempScale(res)
     })
   }, [])
+
   return (
-    <Card className='overlayCard'>
-      <WeatherCard city='Gopalganj' tempScale={tempScale} />
-    </Card>
+    <>
+      {tempScale?.hasOverlay ? (
+        <Card className='overlayCard'>
+          <WeatherCard city='Gopalganj' tempScale={tempScale} />
+        </Card>
+      ) : null}
+    </>
   )
 }
 

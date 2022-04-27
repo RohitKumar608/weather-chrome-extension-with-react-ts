@@ -5,6 +5,7 @@ export interface LocalStorage {
 }
 
 export interface WeatherTemplateScale {
+  hasOverlay?: boolean
   homeCity: string
   tempScale?: OpenWeatherTempScale
 }

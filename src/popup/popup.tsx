@@ -58,17 +58,15 @@ const Test: React.FC = () => {
     newAlignment: string
   ): void => {
     setOpenWeatherTempScale({
+      ...tempScale,
       tempScale: newAlignment,
-      homeCity: tempScale?.homeCity,
     } as WeatherTemplateScale).then(() => {
       setTempScale({
+        ...tempScale,
         tempScale: newAlignment,
-        homeCity: tempScale?.homeCity,
       } as WeatherTemplateScale)
     })
   }
-
-  console.log(cities, 'tempScale?.homeCity', tempScale?.homeCity)
 
   return (
     <>
