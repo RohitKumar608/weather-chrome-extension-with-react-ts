@@ -9,6 +9,7 @@ import {
   Box,
   Button,
   Switch,
+  FormLabel,
 } from '@mui/material'
 
 import {
@@ -79,6 +80,9 @@ const Options = () => {
               />
             </Grid>
             <Grid item xs={12}>
+              <FormLabel component='legend'>
+                Auto toggle overlay on webpage load
+              </FormLabel>
               <Switch
                 checked={checked}
                 onChange={handleSwitchChange}

@@ -73,6 +73,7 @@ const WeatherCard: React.FC<{
     <Box sx={{ minWidth: 275, mx: '4px', my: '16px', position: 'relative' }}>
       <Card>
         <CardContent>
+          <Typography variant='body1'>{city}</Typography>
           <Stack sx={{ width: '100%' }} spacing={2}>
             <Alert severity='error'>Something went wrong</Alert>
           </Stack>

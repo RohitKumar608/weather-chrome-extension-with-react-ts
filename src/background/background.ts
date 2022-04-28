@@ -1,5 +1,5 @@
 import { setOpenWeatherTempScale } from '../utils/storage'
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onInstalled.addListener(() => {
   setOpenWeatherTempScale({
     tempScale: 'metric',
     homeCity: '',
@@ -11,8 +11,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     title: 'Add city to weather extension',
     id: 'weatherExtension',
   })
-
-  console.log(request)
-  console.log(sender)
-  sendResponse('from background')
 })

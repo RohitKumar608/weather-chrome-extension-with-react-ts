@@ -6,11 +6,15 @@ import {
   IconButton,
   ToggleButton,
   ToggleButtonGroup,
+  Grid,
 } from '@mui/material'
 
-import AddIcon from '@mui/icons-material/Add'
-
+import {
+  Add as AddIcon,
+  PictureInPicture as PictureInPictureIcon,
+} from '@mui/icons-material'
 import { WeatherTemplateScale } from '../utils/storage'
+import { MessageType } from '../utils/message'
 
 interface InputWithAddInterface {
   cityAddHandler: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
@@ -30,6 +34,20 @@ const InputWithAdd: React.FC<InputWithAddInterface> = ({
   tempScale,
   handleTempScaleChange,
 }) => {
+  const handleOverlayButtonClick = () => {
+    chrome.tabs.query(
+      {
+        active: true,
+        currentWindow: true,
+      },
+      (tabs) => {
+        if (tabs.length > 0) {
+          console.log(tabs, '--tabs--')
+          chrome.tabs.sendMessage(tabs[0].id, MessageType.TOGGLE_OVERLAY)
+        }
+      }
+    )
+  }
   return (
     <Paper
       component='form'
@@ -65,7 +83,11 @@ const InputWithAdd: React.FC<InputWithAddInterface> = ({
         <ToggleButton value='imperial'>F</ToggleButton>
         <ToggleButton value='metric'>C</ToggleButton>
       </ToggleButtonGroup>
+
       <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' />
+      <IconButton onClick={handleOverlayButtonClick}>
+        <PictureInPictureIcon />
+      </IconButton>
     </Paper>
   )
 }
