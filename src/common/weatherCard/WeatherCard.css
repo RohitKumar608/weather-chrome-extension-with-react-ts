@@ -1,0 +1,15 @@
+.weather-condition {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  padding-right: 20px;
+  position: relative;
+}
+.weather-condition p {
+  position: absolute;
+  bottom: -10%;
+}
+.weather-condition img {
+  margin-top: -30px;
+}

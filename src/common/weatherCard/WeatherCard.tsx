@@ -10,8 +10,14 @@ import {
 } from '@mui/material'
 
 import ClearIcon from '@mui/icons-material/Clear'
-import { fetchOpenWeatherData, OpenWeatherData } from '../../utils/app'
+import {
+  fetchOpenWeatherData,
+  OpenWeatherData,
+  getWeatherIconSrc,
+} from '../../utils/app'
 import { WeatherTemplateScale } from '../../utils/storage'
+
+import './WeatherCard.css'
 
 const WeatherCard: React.FC<{
   city: string
@@ -44,7 +50,13 @@ const WeatherCard: React.FC<{
   }
   return apiState.isSuccess ? (
     <Box sx={{ minWidth: 275, mx: '4px', my: '16px', position: 'relative' }}>
-      <Card>
+      <Card
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <CardContent>
           <Typography variant='h5'>{weatherData.name}</Typography>
           <Typography variant='body1'>
@@ -54,6 +66,16 @@ const WeatherCard: React.FC<{
             Feels like: {weatherData.main.feels_like}
           </Typography>
         </CardContent>
+        <div className='weather-condition'>
+          {weatherData.weather.length > 0 && (
+            <>
+              <img src={getWeatherIconSrc(weatherData.weather[0].icon)} />
+              <Typography className='weatherCard-body'>
+                {weatherData.weather[0].main}
+              </Typography>
+            </>
+          )}
+        </div>
         {typeof deleteCity === 'function' && (
           <div
             onClick={() => deleteCity(city)}
